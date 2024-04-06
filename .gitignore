@@ -21,4 +21,4 @@ $RECYCLE.BIN/
 # =========================
 # Operating System Files
 # =========================
-client/.angular/cache
+client/.angular/cache/*
