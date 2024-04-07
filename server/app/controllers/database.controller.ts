@@ -16,8 +16,7 @@ export class DatabaseController {
   public get router(): Router {
     const router: Router = Router();
 
-    // ======= HOTEL ROUTES =======
-    // ex http://localhost:3000/database/hotel?hotelNb=3&name=LeGrandHotel&city=laval
+    // ======= BIRD ROUTES =======
     router.get("/birds", (req: Request, res: Response, _: NextFunction) => {
       var birdScientificName = req.query.nomScientifique ? req.query.nomScientifique : "";
       var birdCommonName = req.query.nomCommun ? req.query.nomCommun : "";

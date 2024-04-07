@@ -73,7 +73,7 @@ export class DatabaseService {
     return res;
   }
 
-  // modify name or city of a hotel
+  // modify bird information
   public async updateBird(bird: Bird): Promise<pg.QueryResult> {
     const client = await this.pool.connect();
     await client.query(`SET search_path TO ornithologue_bd;`);
