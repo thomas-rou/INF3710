@@ -1,12 +1,12 @@
 export interface Bird {
     nomscientifique: string;
     nomcommun: string;
-    statutspeces: string;
+    statutspeces: SpecieStatus;
     nomscientifiquecomsommer: string;
 }
 
-export enum Gender {
-    M = 'M',
-    F = 'F',
-    O = 'O'
+export enum SpecieStatus {
+    notEndengered = "Non menacée",
+    vulnerable = "Vulnérable",
+    minorConcern = "Préoccupation mineure",
 }

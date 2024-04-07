@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from "@angular/core";
-import { Bird } from "../../../../common/tables/Bird";
+import { Bird, SpecieStatus } from "../../../../common/tables/Bird";
 import { CommunicationService } from "../communication.service";
 
 @Component({
@@ -15,6 +15,9 @@ export class BirdComponent {
 
   public birds: Bird[] = [];
   public duplicateError: boolean = false;
+  public specieStatuses: string[] = Object.values(SpecieStatus);
+  public birdScientificNames: string[] = [];
+
 
   public constructor(private communicationService: CommunicationService) {}
 
@@ -25,6 +28,7 @@ export class BirdComponent {
   public getBirds(): void {
     this.communicationService.getBirds().subscribe((birds: Bird[]) => {
       this.birds = birds;
+      this.birdScientificNames = birds.map((bird: Bird) => bird.nomscientifique);
     });
   }
 
@@ -70,13 +74,11 @@ export class BirdComponent {
   }
 
   public changeBirdStatus(event: any, i:number){
-    const editField = event.target.textContent;
-    this.birds[i].statutspeces = editField;
+    this.birds[i].statutspeces = event.target.value;
   }
 
   public changeBirdScientificNameConsume(event: any, i:number){
-    const editField = event.target.textContent;
-    this.birds[i].nomscientifiquecomsommer = editField;
+    this.birds[i].nomscientifiquecomsommer = event.target.value;
   }
 
   public updateBird(i: number) {

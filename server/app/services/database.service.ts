@@ -21,12 +21,12 @@ export class DatabaseService {
   public async getAllFromTable(tableName: string): Promise<pg.QueryResult> {
     const client = await this.pool.connect();
     await client.query(`SET search_path TO ornithologue_bd;`);
-    const res = await client.query(`SELECT * FROM ornithologue_bd.${tableName};`);
+    const res = await client.query(`SELECT * FROM ${tableName};`);
     client.release();
     return res;
   }
 
-  // ======= HOTEL =======
+  // ======= BIRD =======
   public async createBird(bird: Bird): Promise<pg.QueryResult> {
     const client = await this.pool.connect();
     await client.query(`SET search_path TO ornithologue_bd;`);

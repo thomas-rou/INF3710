@@ -8,17 +8,23 @@
       <th class="contentCell">Scientific Name</th>
       <th class="contentCell">Common Name</th>
       <th class="contentCell">Species Status</th>
-      <th class="contentCell">Scientific Name Consumer</th>
+      <th class="contentCell">Predator</th>
     </thead>
     <tbody>
       <tr *ngFor="let bird of birds; let i = index">
-        <td class="contentCell">{{ bird.nomscientifique }}</td>
-        <td class="contentCell">{{ bird.nomcommun }}</td>
-        <td class="contentCell">{{ bird.statutspeces }}</td>
-        <td class="contentCell">{{ bird.nomscientifiquecomsommer }}</td>
         <td class="conntentCell" contenteditable="true" (blur)="changeBirdScientificName($event, i)">{{ bird.nomscientifique }}</td>
         <td class="contentCell" contenteditable="true" (blur)="changeBirdName($event, i)">{{ bird.nomcommun}}</td>
-        <td class="actionCell">
+        <td class="contentCell">
+          <select [(ngModel)]="bird.statutspeces" (change)="changeBirdSpeciesStatus($event, i)">
+            <option *ngFor="let status of specieStatuses" [value]="status">{{status}}</option>
+          </select>
+        </td>
+        <td class="contentCell">
+          <select [(ngModel)]="bird.nomscientifiquecomsommer" (change)="changeBirdScientificNameConsumer($event, i)">
+            <option *ngFor="let name of birdScientificNames" [value]="name">{{name}}</option>
+          </select>
+        </td>
+          <td class="actionCell">
           <button type="button" class="submitbtn" (click)="updateBird(i)"><i class="fa fa-edit"></i></button>
           <button type="button" class="deletebtn" (click)="deleteBird(bird.scientificName)"><i class="fa fa-trash-o"></i></button>
         </td>
