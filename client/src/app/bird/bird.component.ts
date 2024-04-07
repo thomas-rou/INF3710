@@ -45,7 +45,6 @@ export class BirdComponent {
         this.communicationService.filter("update");
       }
       this.refresh();
-      this.getBirds();
       this.duplicateError = res === -1;
     });
   }
@@ -54,8 +53,8 @@ export class BirdComponent {
     this.getBirds();
     this.newBirdScientificName.nativeElement.innerText = "";
     this.newBirdName.nativeElement.innerText = "";
-    this.newBirdStatus.nativeElement.innerText = "";
-    this.newBirdScientificNameConsume.nativeElement.innerText = "";
+    this.newBirdStatus.nativeElement.value = "";
+    this.newBirdScientificNameConsume.nativeElement.value = "";
   }
 
   public deleteBird(birdScientificName: string) {
