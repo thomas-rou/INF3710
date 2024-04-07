@@ -3,12 +3,12 @@
 
   <div class="divider"></div>
 
-  <table id="ht" align="center" border="1" width="1000" class="table-striped table-hover">
+  <table id="ht" width="1000" class="table-striped table-hover">
     <thead class="header">
-      <th class="contentCell">Scientific Name</th>
-      <th class="contentCell">Common Name</th>
-      <th class="contentCell">Species Status</th>
-      <th class="contentCell">Predator</th>
+      <th class="contentCell">Nom binominal</th>
+      <th class="contentCell">Nom Commun</th>
+      <th class="contentCell">Statut de conservation</th>
+      <th class="contentCell">Prédateur</th>
     </thead>
     <tbody>
       <tr *ngFor="let bird of birds; let i = index">
@@ -36,13 +36,13 @@
         <td class="contentCell" contenteditable="true" placeholder="New Name" #newBirdName></td>
         <td class="contentCell">
           <select #newBirdStatus>
-            <option value="" selected disabled hidden>Select a status</option>
+            <option value="" selected disabled hidden>Statut de conservation</option>
             <option *ngFor="let status of specieStatuses" [value]="status">{{status}}</option>
           </select>
         </td>
         <td class="contentCell">
           <select #newBirdScientificNameConsume>
-            <option value="" selected disabled hidden>Select a name</option>
+            <option value="" selected disabled hidden>Prédateur</option>
             <option value=""></option>
             <option *ngFor="let name of birdScientificNames" [value]="name">{{name}}</option>
           </select>
