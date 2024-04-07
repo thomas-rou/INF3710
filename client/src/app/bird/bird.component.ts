@@ -37,15 +37,15 @@ export class BirdComponent {
       nomscientifique: this.newBirdScientificName.nativeElement.innerText,
       nomcommun: this.newBirdName.nativeElement.innerText,
       statutspeces: this.newBirdStatus.nativeElement.value,
-      nomscientifiquecomsommer: this.newBirdScientificNameConsume.nativeElement.innerText,
+      nomscientifiquecomsommer: this.newBirdScientificNameConsume.nativeElement.value,
     };
-    console.log(bird);
 
     this.communicationService.insertBird(bird).subscribe((res: number) => {
       if (res > 0) {
         this.communicationService.filter("update");
       }
       this.refresh();
+      this.getBirds();
       this.duplicateError = res === -1;
     });
   }

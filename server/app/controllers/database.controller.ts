@@ -50,9 +50,9 @@ export class DatabaseController {
       (req: Request, res: Response, _: NextFunction) => {
         const bird: Bird = {
           nomscientifique: req.body.nomscientifique,
-          nomcommun: req.body.nomcommun,
-          statutspeces: req.body.statutspeces,
-          nomscientifiquecomsommer: req.body.nomscientifiquecomsommer,
+          nomcommun: req.body.nomcommun ? req.body.nomcommun : "",
+          statutspeces: req.body.statutspeces ? req.body.statutspeces : "",
+          nomscientifiquecomsommer: req.body.nomscientifiquecomsommer ? req.body.nomscientifiquecomsommer : "",
         };
 
         this.databaseService

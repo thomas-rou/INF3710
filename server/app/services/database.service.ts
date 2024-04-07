@@ -1,7 +1,7 @@
 import { injectable } from "inversify";
 import * as pg from "pg";
 import "reflect-metadata";
-import { Bird } from "../../../common/tables/Bird";
+import { Bird, SpecieStatus } from "../../../common/tables/Bird";
 
 @injectable()
 export class DatabaseService {
@@ -28,14 +28,20 @@ export class DatabaseService {
 
   // ======= BIRD =======
   public async createBird(bird: Bird): Promise<pg.QueryResult> {
+    var values: string[];
+    var queryText: string;
     const client = await this.pool.connect();
     await client.query(`SET search_path TO ornithologue_bd;`);
 
-    if (!bird.nomscientifique || !bird.nomcommun|| !bird.statutspeces || !bird.nomscientifiquecomsommer)
+    if (!bird.nomscientifique || !bird.nomcommun|| !bird.statutspeces || !Object.values(SpecieStatus).includes(bird.statutspeces))
       throw new Error("Invalid create bird values");
-
-    const values: string[] = [bird.nomscientifique, bird.nomcommun, bird.statutspeces, bird.nomscientifiquecomsommer];
-    const queryText: string = `INSERT INTO Especeoiseau VALUES($1, $2, $3, $4);`;
+    if (bird.nomscientifiquecomsommer === "") {
+      values = [bird.nomscientifique, bird.nomcommun, bird.statutspeces];
+      queryText = `INSERT INTO Especeoiseau(nomscientifique, nomcommun, statutspeces) VALUES($1, $2, $3);`;
+    } else {
+      values= [bird.nomscientifique, bird.nomcommun, bird.statutspeces, bird.nomscientifiquecomsommer];
+      queryText= `INSERT INTO Especeoiseau(nomscientifique, nomcommun, statutspeces, nomscientifiquecomsommer) VALUES($1, $2, $3, $4);`;
+    }
 
     const res = await client.query(queryText, values);
     client.release();
