@@ -74,22 +74,21 @@ export class DatabaseService {
 
     let toUpdateValues = [];
 
-    if (bird.nomscientifique.length > 0) toUpdateValues.push(`scientificName = '${bird.nomscientifique}'`);
-    if (bird.nomcommun.length > 0) toUpdateValues.push(`name = '${bird.nomcommun}'`);
-    if (bird.statutspeces.length > 0) toUpdateValues.push(`specieStatus = '${bird.statutspeces}'`);
-    if (bird.nomscientifiquecomsommer.length > 0) toUpdateValues.push(`consumeScientificName = '${bird.nomscientifiquecomsommer}'`);
+    if (bird.nomscientifique.length > 0) toUpdateValues.push(`nomscientifique = '${bird.nomscientifique}'`);
+    if (bird.nomcommun.length > 0) toUpdateValues.push(`nomcommun = '${bird.nomcommun}'`);
+    if (bird.statutspeces.length > 0) toUpdateValues.push(`statutspeces = '${bird.statutspeces}'`);
+    if (bird.nomscientifiquecomsommer.length > 0) toUpdateValues.push(`nomscientifiquecomsommer = '${bird.nomscientifiquecomsommer}'`);
 
     if (
       bird.nomscientifique.length === 0 ||
       bird.nomcommun.length === 0 ||
-      bird.statutspeces.length === 0 ||
-      bird.nomscientifiquecomsommer.length === 0
+      bird.statutspeces.length === 0
     )
-      throw new Error("Invalid hotel update query");
+      throw new Error("Invalid bird update query");
 
     const query = `UPDATE Especeoiseau SET ${toUpdateValues.join(
       ", "
-    )} WHERE hotelNb = '${bird.nomscientifique}';`;
+    )} WHERE nomscientifique = '${bird.nomscientifique}';`;
     const res = await client.query(query);
     client.release();
     return res;
