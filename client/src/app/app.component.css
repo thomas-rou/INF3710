@@ -22,17 +22,17 @@
     text-align: center;
 }
 
-.hotel1 {
+.bird1 {
     color: var(--theme-purple);
     font-family: 'Varela Round', sans-serif;
 }
 
-.hotel2 {
+.bird2 {
     color: var(--theme-blue);
     font-family: 'Varela Round', sans-serif;
 }
 
-.hotel3 {
+.bird3 {
     color: var(--theme-lightblue);
     font-family: 'Varela Round', sans-serif;
 }
