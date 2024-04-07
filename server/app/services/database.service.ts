@@ -8,7 +8,7 @@ export class DatabaseService {
   // TODO: A MODIFIER POUR VOTRE BD
   public connectionConfig: pg.ConnectionConfig = {
     user: "postgres",
-    database: "postgres",
+    database: "ornithologue_bd",
     password: "inf3710",
     port: 5432,
     host: "127.0.0.1",
@@ -20,7 +20,8 @@ export class DatabaseService {
   // ======= DEBUG =======
   public async getAllFromTable(tableName: string): Promise<pg.QueryResult> {
     const client = await this.pool.connect();
-    const res = await client.query(`SELECT * FROM ${tableName};`);
+    await client.query(`SET search_path TO ornithologue_bd;`);
+    const res = await client.query(`SELECT * FROM ornithologue_bd.${tableName};`);
     client.release();
     return res;
   }
@@ -28,6 +29,7 @@ export class DatabaseService {
   // ======= HOTEL =======
   public async createBird(bird: Bird): Promise<pg.QueryResult> {
     const client = await this.pool.connect();
+    await client.query(`SET search_path TO ornithologue_bd;`);
 
     if (!bird.scientificName || !bird.commonName|| !bird.specieStatus || !bird.consumeScientificName)
       throw new Error("Invalid create hotel values");
@@ -47,6 +49,7 @@ export class DatabaseService {
     birdConsumeScientificName: string
   ): Promise<pg.QueryResult> {
     const client = await this.pool.connect();
+    await client.query(`SET search_path TO ornithologue_bd;`);
 
     const searchTerms: string[] = [];
     if (birdScientificName.length > 0) searchTerms.push(`scientificName = '${birdScientificName}'`);
@@ -67,6 +70,7 @@ export class DatabaseService {
   // modify name or city of a hotel
   public async updateBird(bird: Bird): Promise<pg.QueryResult> {
     const client = await this.pool.connect();
+    await client.query(`SET search_path TO ornithologue_bd;`);
 
     let toUpdateValues = [];
 
@@ -94,6 +98,7 @@ export class DatabaseService {
     if (birdScientificName.length === 0) throw new Error("Invalid delete query");
 
     const client = await this.pool.connect();
+    await client.query(`SET search_path TO ornithologue_bd;`);
     const query = `DELETE FROM Especeoiseau WHERE hotelNb = '${birdScientificName}';`;
 
     const res = await client.query(query);
