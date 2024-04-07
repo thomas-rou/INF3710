@@ -1,8 +1,8 @@
 export interface Bird {
-    scientificName: string;
-    commonName: string;
-    specieStatus: string;
-    consumeScientificName: string;
+    nomscientifique: string;
+    nomcommun: string;
+    statutspeces: string;
+    nomscientifiquecomsommer: string;
 }
 
 export enum Gender {

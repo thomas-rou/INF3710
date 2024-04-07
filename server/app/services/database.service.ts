@@ -31,10 +31,10 @@ export class DatabaseService {
     const client = await this.pool.connect();
     await client.query(`SET search_path TO ornithologue_bd;`);
 
-    if (!bird.scientificName || !bird.commonName|| !bird.specieStatus || !bird.consumeScientificName)
+    if (!bird.nomscientifique || !bird.nomcommun|| !bird.statutspeces || !bird.nomscientifiquecomsommer)
       throw new Error("Invalid create hotel values");
 
-    const values: string[] = [bird.scientificName, bird.commonName, bird.specieStatus, bird.consumeScientificName];
+    const values: string[] = [bird.nomscientifique, bird.nomcommun, bird.statutspeces, bird.nomscientifiquecomsommer];
     const queryText: string = `INSERT INTO Especeoiseau VALUES($1, $2, $3);`;
 
     const res = await client.query(queryText, values);
@@ -52,10 +52,10 @@ export class DatabaseService {
     await client.query(`SET search_path TO ornithologue_bd;`);
 
     const searchTerms: string[] = [];
-    if (birdScientificName.length > 0) searchTerms.push(`scientificName = '${birdScientificName}'`);
-    if (birdCommonName.length > 0) searchTerms.push(`commonName = '${birdCommonName}'`);
-    if (birdSpecieStatus.length > 0) searchTerms.push(`specieStatus = '${birdSpecieStatus}'`);
-    if (birdConsumeScientificName.length > 0) searchTerms.push(`consumeScientificName = '${birdConsumeScientificName}'`);
+    if (birdScientificName.length > 0) searchTerms.push(`nomscientifique = '${birdScientificName}'`);
+    if (birdCommonName.length > 0) searchTerms.push(`nomcommun = '${birdCommonName}'`);
+    if (birdSpecieStatus.length > 0) searchTerms.push(`statutspeces = '${birdSpecieStatus}'`);
+    if (birdConsumeScientificName.length > 0) searchTerms.push(`nomscientifiquecomsommer = '${birdConsumeScientificName}'`);
 
     let queryText = "SELECT * FROM Especeoiseau";
     if (searchTerms.length > 0)
@@ -74,21 +74,22 @@ export class DatabaseService {
 
     let toUpdateValues = [];
 
-    if (bird.commonName.length > 0) toUpdateValues.push(`name = '${bird.commonName}'`);
-    if (bird.specieStatus.length > 0) toUpdateValues.push(`specieStatus = '${bird.specieStatus}'`);
-    if (bird.consumeScientificName.length > 0) toUpdateValues.push(`consumeScientificName = '${bird.consumeScientificName}'`);
+    if (bird.nomscientifique.length > 0) toUpdateValues.push(`scientificName = '${bird.nomscientifique}'`);
+    if (bird.nomcommun.length > 0) toUpdateValues.push(`name = '${bird.nomcommun}'`);
+    if (bird.statutspeces.length > 0) toUpdateValues.push(`specieStatus = '${bird.statutspeces}'`);
+    if (bird.nomscientifiquecomsommer.length > 0) toUpdateValues.push(`consumeScientificName = '${bird.nomscientifiquecomsommer}'`);
 
     if (
-      bird.commonName.length === 0 ||
-      bird.specieStatus.length === 0 ||
-      bird.consumeScientificName.length === 0 ||
-      bird.scientificName.length === 0
+      bird.nomscientifique.length === 0 ||
+      bird.nomcommun.length === 0 ||
+      bird.statutspeces.length === 0 ||
+      bird.nomscientifiquecomsommer.length === 0
     )
       throw new Error("Invalid hotel update query");
 
     const query = `UPDATE Especeoiseau SET ${toUpdateValues.join(
       ", "
-    )} WHERE hotelNb = '${bird.scientificName}';`;
+    )} WHERE hotelNb = '${bird.nomscientifique}';`;
     const res = await client.query(query);
     client.release();
     return res;

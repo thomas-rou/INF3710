@@ -19,10 +19,10 @@ export class DatabaseController {
     // ======= HOTEL ROUTES =======
     // ex http://localhost:3000/database/hotel?hotelNb=3&name=LeGrandHotel&city=laval
     router.get("/birds", (req: Request, res: Response, _: NextFunction) => {
-      var birdScientificName = req.query.scientificName ? req.query.scientificName : "";
-      var birdCommonName = req.query.commonName ? req.query.commonName : "";
-      var birdSpecieStatus = req.query.specieStatus ? req.query.specieStatus : "";
-      var birdConsumeScientificName = req.query.consumeScientificName ? req.query.consumeScientificName : "";
+      var birdScientificName = req.query.nomScientifique ? req.query.nomScientifique : "";
+      var birdCommonName = req.query.nomCommun ? req.query.nomCommun : "";
+      var birdSpecieStatus = req.query.statutSpeces ? req.query.statutSpeces : "";
+      var birdConsumeScientificName = req.query.nomScientifiqueComsommer ? req.query.nomScientifiqueComsommer : "";
 
       this.databaseService
         .filterBirds(
@@ -33,10 +33,10 @@ export class DatabaseController {
         )
         .then((result: pg.QueryResult) => {
           const birds: Bird[] = result.rows.map((bird: Bird) => ({
-            scientificName: bird.scientificName,
-            commonName: bird.commonName,
-            specieStatus: bird.specieStatus,
-            consumeScientificName: bird.consumeScientificName,
+            nomscientifique: bird.nomscientifique,
+            nomcommun: bird.nomcommun,
+            statutspeces: bird.statutspeces,
+            nomscientifiquecomsommer: bird.nomscientifiquecomsommer,
           }));
           res.json(birds);
         })
@@ -49,10 +49,10 @@ export class DatabaseController {
       "/birds/insert",
       (req: Request, res: Response, _: NextFunction) => {
         const bird: Bird = {
-          scientificName: req.body.scientificName,
-          commonName: req.body.commonName,
-          specieStatus: req.body.specieStatus,
-          consumeScientificName: req.body.consumeScientificName,
+          nomscientifique: req.body.nomscientifique,
+          nomcommun: req.body.nomcommun,
+          statutspeces: req.body.statutspeces,
+          nomscientifiquecomsommer: req.body.nomscientifiquecomsommer,
         };
 
         this.databaseService
@@ -86,10 +86,10 @@ export class DatabaseController {
       "/birds/update",
       (req: Request, res: Response, _: NextFunction) => {
         const bird: Bird = {
-          scientificName: req.body.scientificName,
-          commonName: req.body.commonName ? req.body.commonName : "",
-          specieStatus: req.body.specieStatus ? req.body.specieStatus : "",
-          consumeScientificName: req.body.consumeScientificName ? req.body.consumeScientificName : "",
+          nomscientifique: req.body.nomscientifique,
+          nomcommun: req.body.nomcommun ? req.body.nomcommun : "",
+          statutspeces: req.body.statutspeces ? req.body.statutspeces : "",
+          nomscientifiquecomsommer: req.body.nomscientifiquecomsommer ? req.body.nomscientifiquecomsommer : "",
         };
 
         this.databaseService

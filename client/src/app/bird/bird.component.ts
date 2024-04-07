@@ -61,22 +61,22 @@ export class BirdComponent {
 
   public changeBirdScientificName(event: any, i:number){
     const editField = event.target.textContent;
-    this.birds[i].scientificName = editField;
+    this.birds[i].nomscientifique = editField;
   }
 
   public changeBirdName(event: any, i:number){
     const editField = event.target.textContent;
-    this.birds[i].commonName = editField;
+    this.birds[i].nomcommun = editField;
   }
 
   public changeBirdStatus(event: any, i:number){
     const editField = event.target.textContent;
-    this.birds[i].specieStatus = editField;
+    this.birds[i].statutspeces = editField;
   }
 
   public changeBirdScientificNameConsume(event: any, i:number){
     const editField = event.target.textContent;
-    this.birds[i].consumeScientificName = editField;
+    this.birds[i].nomscientifiquecomsommer = editField;
   }
 
   public updateBird(i: number) {
