@@ -57,7 +57,7 @@ export class BirdComponent {
     this.newBirdScientificNameConsume.nativeElement.innerText = "";
   }
 
-  public deleteHotel(birdScientificName: string) {
+  public deleteBird(birdScientificName: string) {
     this.communicationService.deleteBird(birdScientificName).subscribe((res: any) => {
       this.refresh();
     });

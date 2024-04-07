@@ -1,4 +1,4 @@
-#hotel {
+#bird {
     background-color: #e2e2e2;
     font-family: 'Roboto', sans-serif;
     text-align: center;
@@ -26,6 +26,10 @@
     padding: 10px;
 }
 
+select {
+    padding: 5px;
+}
+
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
     background-color: #9A75F033;
 }
@@ -43,7 +47,7 @@
 
 [placeholder]:empty::before {
     content: attr(placeholder);
-    color: #9A75F0BB; 
+    color: #9A75F0BB;
 }
 
 [placeholder]:empty:focus::before {
@@ -54,19 +58,23 @@
     color: #9A75F0;
 }
 
-.blank_row:not(.nohover):hover { 
-    color: #9A75F0; 
+.blank_row:not(.nohover):hover {
+    color: #9A75F0;
+}
+
+.blank_row select {
+    color: #9A75F0;
 }
 
 .actionCell {
     padding: 10px;
-    color: #9A75F0; 
+    color: #9A75F0;
 }
 
 .deletebtn {
     border-radius: 4px;
-    color: white; 
-    background-color: #9A75F0; 
+    color: white;
+    background-color: #9A75F0;
     border-style: none;
 }
 

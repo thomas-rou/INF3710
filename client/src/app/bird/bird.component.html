@@ -1,4 +1,4 @@
-<div id="hotel">
+<div id="bird">
   <h1>Birds</h1>
 
   <div class="divider"></div>
@@ -12,7 +12,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let bird of birds; let i = index">
-        <td class="conntentCell" contenteditable="true" (blur)="changeBirdScientificName($event, i)">{{ bird.nomscientifique }}</td>
+        <td class="contentCell" contenteditable="true" (blur)="changeBirdScientificName($event, i)">{{ bird.nomscientifique }}</td>
         <td class="contentCell" contenteditable="true" (blur)="changeBirdName($event, i)">{{ bird.nomcommun}}</td>
         <td class="contentCell">
           <select [(ngModel)]="bird.statutspeces" (change)="changeBirdSpeciesStatus($event, i)">
@@ -33,8 +33,18 @@
       <tr class="blank_row">
         <td class="contentCell" contenteditable="true" placeholder="New Scientific Name" #newBirdScientificName></td>
         <td class="contentCell" contenteditable="true" placeholder="New Name" #newBirdName></td>
-        <td class="contentCell" contenteditable="true" placeholder="New Species Status" #newBirdSpeciesStatus></td>
-        <td class="contentCell" contenteditable="true" placeholder="New Scientific Name Consumer" #newBirdScientificNameConsumer></td>
+        <td class="contentCell">
+          <select #newBirdSpeciesStatus>
+            <option value="" selected disabled hidden>Select a status</option>
+            <option *ngFor="let status of specieStatuses" [value]="status">{{status}}</option>
+          </select>
+        </td>
+        <td class="contentCell">
+          <select #newBirdScientificNameConsumer>
+            <option value="" selected disabled hidden>Select a name</option>
+            <option *ngFor="let name of birdScientificNames" [value]="name">{{name}}</option>
+          </select>
+        </td>
         <td class="contentCell"></td>
     </tr>
 
