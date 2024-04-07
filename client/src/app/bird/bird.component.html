@@ -1,0 +1,40 @@
+<div id="hotel">
+  <h1>Birds</h1>
+
+  <div class="divider"></div>
+
+  <table id="ht" align="center" border="1" width="1000" class="table-striped table-hover">
+    <thead class="header">
+      <th class="contentCell">Scientific Name</th>
+      <th class="contentCell">Common Name</th>
+      <th class="contentCell">Species Status</th>
+      <th class="contentCell">Scientific Name Consumer</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let bird of birds; let i = index">
+        <td class="contentCell">{{ bird.scientificName }}</td>
+        <td class="contentCell">{{ bird.commonName }}</td>
+        <td class="contentCell">{{ bird.speciesStatus }}</td>
+        <td class="contentCell">{{ bird.scientificNameConsumer }}</td>
+        <td class="conntentCell" contenteditable="true" (blur)="changeBirdScientificName($event, i)">{{ bird.scientificName }}</td>
+        <td class="contentCell" contenteditable="true" (blur)="changeBirdName($event, i)">{{ bird.name}}</td>
+        <td class="actionCell">
+          <button type="button" class="submitbtn" (click)="updateBird(i)"><i class="fa fa-edit"></i></button>
+          <button type="button" class="deletebtn" (click)="deleteBird(bird.scientificName)"><i class="fa fa-trash-o"></i></button>
+        </td>
+      </tr>
+
+      <tr class="blank_row">
+        <td class="contentCell" contenteditable="true" placeholder="New Scientific Name" #newBirdScientificName></td>
+        <td class="contentCell" contenteditable="true" placeholder="New Name" #newBirdName></td>
+        <td class="contentCell" contenteditable="true" placeholder="New Species Status" #newBirdSpeciesStatus></td>
+        <td class="contentCell" contenteditable="true" placeholder="New Scientific Name Consumer" #newBirdScientificNameConsumer></td>
+        <td class="contentCell"></td>
+    </tr>
+
+    </tbody>
+  </table>
+
+  <button type="button" class="btn" (click)="insertBird()">+</button>
+
+</div>
