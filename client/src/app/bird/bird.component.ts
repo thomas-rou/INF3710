@@ -34,11 +34,12 @@ export class BirdComponent {
 
   public insertBird(): void {
     const bird: any = {
-      scientificName: this.newBirdScientificName.nativeElement.innerText,
-      commonName: this.newBirdName.nativeElement.innerText,
-      specieStatus: this.newBirdStatus.nativeElement.innerText,
-      consumeScientificName: this.newBirdScientificNameConsume.nativeElement.innerText,
+      nomscientifique: this.newBirdScientificName.nativeElement.innerText,
+      nomcommun: this.newBirdName.nativeElement.innerText,
+      statutspeces: this.newBirdStatus.nativeElement.value,
+      nomscientifiquecomsommer: this.newBirdScientificNameConsume.nativeElement.innerText,
     };
+    console.log(bird);
 
     this.communicationService.insertBird(bird).subscribe((res: number) => {
       if (res > 0) {
