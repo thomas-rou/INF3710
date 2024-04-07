@@ -9,6 +9,7 @@
 .title {
     color: var(--theme-purple);
     font-family: 'Roboto', sans-serif;
+    padding: 0.2%;
 }
 
 .home {
