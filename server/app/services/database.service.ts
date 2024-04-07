@@ -32,10 +32,10 @@ export class DatabaseService {
     await client.query(`SET search_path TO ornithologue_bd;`);
 
     if (!bird.nomscientifique || !bird.nomcommun|| !bird.statutspeces || !bird.nomscientifiquecomsommer)
-      throw new Error("Invalid create hotel values");
+      throw new Error("Invalid create bird values");
 
     const values: string[] = [bird.nomscientifique, bird.nomcommun, bird.statutspeces, bird.nomscientifiquecomsommer];
-    const queryText: string = `INSERT INTO Especeoiseau VALUES($1, $2, $3);`;
+    const queryText: string = `INSERT INTO Especeoiseau VALUES($1, $2, $3, $4);`;
 
     const res = await client.query(queryText, values);
     client.release();
@@ -99,9 +99,22 @@ export class DatabaseService {
 
     const client = await this.pool.connect();
     await client.query(`SET search_path TO ornithologue_bd;`);
-    const query = `DELETE FROM Especeoiseau WHERE hotelNb = '${birdScientificName}';`;
+    // Delete the records in the "observation" table that reference the record you're trying to delete
+    const deleteObservationQuery = `DELETE FROM observation WHERE nomscientifique = '${birdScientificName}';`;
+    await client.query(deleteObservationQuery);
 
-    const res = await client.query(query);
+    // Delete the records in the "resider" table that reference the record you're trying to delete
+    const deleteResiderQuery = `DELETE FROM resider WHERE nomscientifique = '${birdScientificName}';`;
+    await client.query(deleteResiderQuery)
+
+    // Set the foreign key column to null for any records that reference the record you're trying to delete
+    const updateQuery = `UPDATE Especeoiseau SET nomscientifiquecomsommer = NULL WHERE nomscientifiquecomsommer = '${birdScientificName}';`;
+    await client.query(updateQuery);
+
+    // Delete the record in the "Especeoiseau" table
+    const deleteQuery = `DELETE FROM Especeoiseau WHERE nomscientifique = '${birdScientificName}';`;
+
+    const res = await client.query(deleteQuery);
     client.release();
     return res;
   }
