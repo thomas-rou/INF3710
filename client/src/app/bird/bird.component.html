@@ -16,11 +16,13 @@
         <td class="contentCell" contenteditable="true" (blur)="changeBirdName($event, i)">{{ bird.nomcommun}}</td>
         <td class="contentCell">
           <select [(ngModel)]="bird.statutspeces" (change)="changeBirdSpeciesStatus($event, i)">
+            <option value=""></option>
             <option *ngFor="let status of specieStatuses" [value]="status">{{status}}</option>
           </select>
         </td>
         <td class="contentCell">
           <select [(ngModel)]="bird.nomscientifiquecomsommer" (change)="changeBirdScientificNameConsumer($event, i)">
+            <option value=""></option>
             <option *ngFor="let name of birdScientificNames" [value]="name">{{name}}</option>
           </select>
         </td>
@@ -36,12 +38,14 @@
         <td class="contentCell">
           <select #newBirdSpeciesStatus>
             <option value="" selected disabled hidden>Select a status</option>
+            <option value=""></option>
             <option *ngFor="let status of specieStatuses" [value]="status">{{status}}</option>
           </select>
         </td>
         <td class="contentCell">
           <select #newBirdScientificNameConsumer>
             <option value="" selected disabled hidden>Select a name</option>
+            <option value=""></option>
             <option *ngFor="let name of birdScientificNames" [value]="name">{{name}}</option>
           </select>
         </td>
