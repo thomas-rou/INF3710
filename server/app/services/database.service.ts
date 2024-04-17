@@ -35,6 +35,9 @@ export class DatabaseService {
 
     if (!bird.nomscientifique || !bird.nomcommun|| !bird.statutspeces || !Object.values(SpecieStatus).includes(bird.statutspeces))
       throw new Error("Invalid create bird values");
+
+    bird.nomscientifique = bird.nomscientifique.replace(/\s/g, '');
+
     if (bird.nomscientifiquecomsommer === "") {
       values = [bird.nomscientifique, bird.nomcommun, bird.statutspeces];
       queryText = `INSERT INTO Especeoiseau(nomscientifique, nomcommun, statutspeces) VALUES($1, $2, $3);`;
@@ -83,7 +86,6 @@ export class DatabaseService {
     if (bird.nomscientifique.length > 0) toUpdateValues.push(`nomscientifique = '${bird.nomscientifique}'`);
     if (bird.nomcommun.length > 0) toUpdateValues.push(`nomcommun = '${bird.nomcommun}'`);
     if (bird.statutspeces.length > 0) toUpdateValues.push(`statutspeces = '${bird.statutspeces}'`);
-    if (bird.nomscientifiquecomsommer.length > 0) toUpdateValues.push(`nomscientifiquecomsommer = '${bird.nomscientifiquecomsommer}'`);
 
     if (
       bird.nomscientifique.length === 0 ||
@@ -92,9 +94,21 @@ export class DatabaseService {
     )
       throw new Error("Invalid bird update query");
 
-    const query = `UPDATE Especeoiseau SET ${toUpdateValues.join(
-      ", "
-    )} WHERE nomscientifique = '${bird.nomscientifique}';`;
+    bird.nomscientifique = bird.nomscientifique.replace(/\s/g, '');
+
+    if (bird.nomscientifiquecomsommer.length > 0) {
+      // Check if the new `nomscientifiquecomsommer` value exists in the `Especeoiseau` table.
+      const exists = await client.query(`SELECT 1 FROM Especeoiseau WHERE nomscientifique = '${bird.nomscientifiquecomsommer}'`);
+
+      if (!exists.rows.length) {
+        // Insert a new record in the `Especeoiseau` table with the new `nomscientifiquecomsommer` value.
+        await client.query(`INSERT INTO Especeoiseau (nomscientifique) VALUES ('${bird.nomscientifiquecomsommer}')`);
+      }
+
+      toUpdateValues.push(`nomscientifiquecomsommer = '${bird.nomscientifiquecomsommer}'`);
+    }
+
+    const query = `UPDATE Especeoiseau SET ${toUpdateValues.join(", ")} WHERE nomscientifique = '${bird.nomscientifique}';`;
     const res = await client.query(query);
     client.release();
     return res;
@@ -102,6 +116,8 @@ export class DatabaseService {
 
   public async deleteBird(birdScientificName: string): Promise<pg.QueryResult> {
     if (birdScientificName.length === 0) throw new Error("Invalid delete query");
+
+    birdScientificName = birdScientificName.replace(/\s/g, '');
 
     const client = await this.pool.connect();
     await client.query(`SET search_path TO ornithologue_bd;`);

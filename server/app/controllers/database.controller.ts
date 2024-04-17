@@ -41,6 +41,7 @@ export class DatabaseController {
         })
         .catch((e: Error) => {
           console.error(e.stack);
+          res.status(400).send(e.message);
         });
     });
 
@@ -61,7 +62,7 @@ export class DatabaseController {
           })
           .catch((e: Error) => {
             console.error(e.stack);
-            res.json(-1);
+            res.json(e.message);
           });
       }
     );
@@ -77,6 +78,7 @@ export class DatabaseController {
           })
           .catch((e: Error) => {
             console.error(e.stack);
+            res.status(400).send(e.message);
           });
       }
     );
@@ -98,6 +100,7 @@ export class DatabaseController {
           })
           .catch((e: Error) => {
             console.error(e.stack);
+            res.status(400).send(e.message);
           });
       }
     );
@@ -113,6 +116,7 @@ export class DatabaseController {
           })
           .catch((e: Error) => {
             console.error(e.stack);
+            res.status(400).send(e.message);
           });
       }
     );

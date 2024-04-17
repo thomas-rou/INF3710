@@ -42,7 +42,10 @@ export class BirdComponent {
 
     this.communicationService.insertBird(bird).subscribe((res: number) => {
       if (res > 0) {
+        console.log("Bird inserted");
         this.communicationService.filter("update");
+      } else {
+        alert(res);
       }
       this.refresh();
       this.duplicateError = res === -1;
@@ -59,7 +62,11 @@ export class BirdComponent {
 
   public deleteBird(birdScientificName: string) {
     this.communicationService.deleteBird(birdScientificName).subscribe((res: any) => {
-      this.refresh();
+      if (res > 0) {
+        this.refresh();
+      } else {
+        alert('Error deleting bird');
+      }
     });
   }
 
@@ -83,7 +90,11 @@ export class BirdComponent {
 
   public updateBird(i: number) {
     this.communicationService.updateBird(this.birds[i]).subscribe((res: any) => {
-      this.refresh();
+      if (res > 0) {
+        this.refresh();
+      } else {
+        alert('Error updating bird');
+      }
     });
   }
 }
